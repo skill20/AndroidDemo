@@ -15,14 +15,25 @@ android {
         buildConfigField "String", "BASE_URL", "\"${PP_NAME}\""
         buildConfigField "String", "APP_NAME", "\"appName\""
     }
+
+    signingConfigs {
+        sign {
+            keyAlias 'demo'
+            keyPassword '123456'
+            storeFile file('demo.jks')
+            storePassword '123456'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.sign
         }
 
         debug{
-
+            signingConfig signingConfigs.sign
         }
     }
 }
