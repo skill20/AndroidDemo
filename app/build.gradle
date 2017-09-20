@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 
-def PP_NAME = "AAA"
-
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
@@ -13,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "BASE_URL", "\"${PP_NAME}\""
+        buildConfigField "String", "BASE_URL", PP_NAME
         buildConfigField "String", "APP_NAME", "\"appName\""
     }
 
