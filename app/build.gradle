@@ -30,12 +30,14 @@ android {
 
     buildTypes {
         release {
+            buildConfigField "String", "BASE_URL", PP_NAME
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.sign
         }
 
         debug{
+            buildConfigField "String", "BASE_URL", PP_NAME
             signingConfig signingConfigs.sign
         }
     }
