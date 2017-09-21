@@ -11,7 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "BASE_URL", project.PP_NAME
+        buildConfigField "String", "BASE_URL", PP_NAME
         buildConfigField "String", "APP_NAME", "\"appName\""
     }
 
@@ -30,14 +30,14 @@ android {
 
     buildTypes {
         release {
-            buildConfigField "String", "BASE_URL", project.PP_NAME
+            buildConfigField "String", "BASE_URL",PP_NAME
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.sign
         }
 
         debug{
-            buildConfigField "String", "BASE_URL", project.PP_NAME
+            buildConfigField "String", "BASE_URL", PP_NAME
             signingConfig signingConfigs.sign
         }
     }
