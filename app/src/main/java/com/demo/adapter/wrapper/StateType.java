@@ -2,9 +2,6 @@ package com.demo.adapter.wrapper;
 
 import android.support.annotation.IntDef;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
 /**
  * Create by wangqingqing
  * On 2017/10/31 15:19
@@ -18,9 +15,9 @@ public class StateType {
     public final static int STATE_NO_MORE = 2;
     public final static int STATE_LOADING_MORE_FAIL = 3;
 
-    @Retention(RetentionPolicy.SOURCE)
     @IntDef({STATE_LOADING, STATE_COMPLETE, STATE_NO_MORE, STATE_LOADING_MORE_FAIL})
-    @interface StateTypeDef {}
+    @interface StateTypeDef {
+    }
 
     public final int fileType;
 
