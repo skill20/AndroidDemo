@@ -112,7 +112,7 @@ public class AdapterActivity extends AppCompatActivity {
                 View header = LayoutInflater.from(context).inflate(R.layout.holder_list_head, recycleView, false);
                 View footer = LayoutInflater.from(context).inflate(R.layout.holder_list_footer, recycleView, false);
 
-                HeaderAndFooterWrapper<Object> headerAndFooterWrapper = new HeaderAndFooterWrapper<Object>(adapter);
+                HeaderAndFooterWrapper headerAndFooterWrapper = new HeaderAndFooterWrapper(adapter);
                 headerAndFooterWrapper.addHeaderView(header);
                 headerAndFooterWrapper.addFootView(footer);
 
@@ -138,7 +138,7 @@ public class AdapterActivity extends AppCompatActivity {
 
                 recycleView.setLayoutManager(gridLayoutManager);
 
-                EmptyWrapper<Object> emptyWrapper = new EmptyWrapper<>(adapter);
+                EmptyWrapper emptyWrapper = new EmptyWrapper(adapter);
                 View ev = LayoutInflater.from(context).inflate(R.layout.holder_list_empty, recycleView, false);
                 emptyWrapper.setEmptyView(ev);
 

@@ -14,7 +14,7 @@ import com.demo.adapter.base.ViewHolder;
  * Copyright(c) 2017 世联行
  * Description
  */
-public class EmptyWrapper<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class EmptyWrapper extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public static final int ITEM_TYPE_EMPTY = Integer.MAX_VALUE - 1;
 
