@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btn_decoration).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(),DecorationActivity.class));
+            }
+        });
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
