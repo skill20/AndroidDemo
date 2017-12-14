@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.demo.adapter.base.ItemViewBinder;
-import com.demo.adapter.base.ItemViewDelegateManager;
+import com.demo.adapter.base.ItemViewBinderManager;
 import com.demo.adapter.base.MultiItemType;
 import com.demo.adapter.base.ViewHolder;
 
@@ -23,14 +23,14 @@ public class MultiItemTypeAdapter<T extends MultiItemType> extends RecyclerView.
     protected Context mContext;
     protected List<T> mDataList;
 
-    protected ItemViewDelegateManager<T> mItemViewDelegateManager;
+    protected ItemViewBinderManager<T> mItemViewBinderManager;
     protected OnItemClickListener mOnItemClickListener;
 
 
     public MultiItemTypeAdapter(Context context, List<T> data) {
         mContext = context;
         mDataList = data;
-        mItemViewDelegateManager = new ItemViewDelegateManager<>();
+        mItemViewBinderManager = new ItemViewBinderManager<>();
     }
 
     @Override
@@ -39,12 +39,12 @@ public class MultiItemTypeAdapter<T extends MultiItemType> extends RecyclerView.
             return super.getItemViewType(position);
         }
 
-        return mItemViewDelegateManager.getItemViewType(mDataList.get(position), position);
+        return mItemViewBinderManager.getItemViewType(mDataList.get(position), position);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        int layoutId = mItemViewDelegateManager.getItemViewLayoutId(viewType);
+        int layoutId = mItemViewBinderManager.getItemViewLayoutId(viewType);
         ViewHolder holder = ViewHolder.createViewHolder(mContext, parent, layoutId);
         onViewHolderCreated(holder, holder.getConvertView());
         setListener(parent, holder, viewType);
@@ -92,7 +92,7 @@ public class MultiItemTypeAdapter<T extends MultiItemType> extends RecyclerView.
     }
 
     public void convert(ViewHolder holder, T t) {
-        mItemViewDelegateManager.convert(holder, t, holder.getAdapterPosition());
+        mItemViewBinderManager.convert(holder, t, holder.getAdapterPosition());
     }
 
     @Override
@@ -104,15 +104,15 @@ public class MultiItemTypeAdapter<T extends MultiItemType> extends RecyclerView.
     }
 
     protected boolean useItemViewDelegateManager() {
-        return mItemViewDelegateManager.getItemViewDelegateCount() > 0;
+        return mItemViewBinderManager.getItemViewBinderCount() > 0;
     }
 
     public List<T> getData() {
         return mDataList;
     }
 
-    public MultiItemTypeAdapter addItemViewDelegate(int viewType, ItemViewBinder itemViewBinder) {
-        mItemViewDelegateManager.addDelegate(viewType, itemViewBinder);
+    public MultiItemTypeAdapter addItemViewBinder(int viewType, ItemViewBinder itemViewBinder) {
+        mItemViewBinderManager.addViewBinder(viewType, itemViewBinder);
         return this;
     }
 

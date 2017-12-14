@@ -48,8 +48,8 @@ public class DecorationActivity extends AppCompatActivity {
 
         mCityList = getData();
         MultiItemTypeAdapter<CityBean> adapter = new MultiItemTypeAdapter<>(this, mCityList);
-        adapter.addItemViewDelegate(CityBean.CITY_CHAR, new ListHolder1());
-        adapter.addItemViewDelegate(CityBean.CITY_NAME, new ListHolder2());
+        adapter.addItemViewBinder(CityBean.CITY_CHAR, new ListHolder1());
+        adapter.addItemViewBinder(CityBean.CITY_NAME, new ListHolder2());
 
         mRecycleView.addItemDecoration(new TitleItemDecoration().registerStickType(R.layout.holder_list_1, new TitleItemDecoration.StickTypeCreator() {
             @Override

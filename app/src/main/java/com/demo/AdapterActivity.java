@@ -67,7 +67,7 @@ public class AdapterActivity extends AppCompatActivity {
                 Context context = v.getContext();
                 LinearLayoutManager layoutManager = new LinearLayoutManager(context);
                 MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(10));
-                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
+                adapter.addItemViewBinder(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
                 recycleView.setLayoutManager(layoutManager);
                 recycleView.setAdapter(adapter);
             }
@@ -93,8 +93,8 @@ public class AdapterActivity extends AppCompatActivity {
 
 
                 MultiItemTypeAdapter<MultiItemType> adapter = new MultiItemTypeAdapter<>(context, objects);
-                adapter.addItemViewDelegate(Result.CLICK_ITEM_VIEW,new ListHolder1());
-                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
+                adapter.addItemViewBinder(Result.CLICK_ITEM_VIEW,new ListHolder1());
+                adapter.addItemViewBinder(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
 
 
                 recycleView.setLayoutManager(layoutManager);
@@ -111,7 +111,7 @@ public class AdapterActivity extends AppCompatActivity {
                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
 
                 MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(100));
-                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
+                adapter.addItemViewBinder(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
                 recycleView.setLayoutManager(staggeredGridLayoutManager);
 
                 View header = LayoutInflater.from(context).inflate(R.layout.holder_list_head, recycleView, false);
@@ -135,7 +135,7 @@ public class AdapterActivity extends AppCompatActivity {
                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
 
                 MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(20));
-                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
+                adapter.addItemViewBinder(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
 
                 recycleView.setLayoutManager(gridLayoutManager);
 
@@ -157,7 +157,7 @@ public class AdapterActivity extends AppCompatActivity {
                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
 
                 final MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(10));
-                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
+                adapter.addItemViewBinder(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
                 recycleView.setLayoutManager(layoutManager);
 
                 final LoadMoreWrapper loadMoreWrapper = new LoadMoreWrapper(adapter) {

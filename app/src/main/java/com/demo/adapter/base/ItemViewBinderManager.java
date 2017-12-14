@@ -8,15 +8,15 @@ import android.support.v4.util.SparseArrayCompat;
  * Copyright(c) 2017 世联行
  * Description
  */
-public class ItemViewDelegateManager<T extends MultiItemType> {
+public class ItemViewBinderManager<T extends MultiItemType> {
 
     private SparseArrayCompat<ItemViewBinder<T>> delegates = new SparseArrayCompat<>();
 
-    public int getItemViewDelegateCount() {
+    public int getItemViewBinderCount() {
         return delegates.size();
     }
 
-    public ItemViewDelegateManager<T> addDelegate(int viewType, ItemViewBinder<T> delegate) {
+    public ItemViewBinderManager<T> addViewBinder(int viewType, ItemViewBinder<T> delegate) {
         if (delegates.get(viewType) != null) {
             throw new IllegalArgumentException(
                     "An ItemViewBinder is already registered for the viewType = "
@@ -28,7 +28,7 @@ public class ItemViewDelegateManager<T extends MultiItemType> {
         return this;
     }
 
-    public ItemViewDelegateManager<T> removeDelegate(ItemViewBinder<T> delegate) {
+    public ItemViewBinderManager<T> removeViewBinder(ItemViewBinder<T> delegate) {
         if (delegate == null) {
             throw new NullPointerException("ItemViewBinder is null");
         }
@@ -40,7 +40,7 @@ public class ItemViewDelegateManager<T extends MultiItemType> {
         return this;
     }
 
-    public ItemViewDelegateManager<T> removeDelegate(int itemType) {
+    public ItemViewBinderManager<T> removeViewBinder(int itemType) {
         int indexToRemove = delegates.indexOfKey(itemType);
 
         if (indexToRemove >= 0) {
@@ -61,12 +61,12 @@ public class ItemViewDelegateManager<T extends MultiItemType> {
     }
 
 
-    public ItemViewBinder getItemViewDelegate(int viewType) {
+    public ItemViewBinder getItemViewBinder(int viewType) {
         return delegates.get(viewType);
     }
 
     public int getItemViewLayoutId(int viewType) {
-        return getItemViewDelegate(viewType).getItemViewLayoutId();
+        return getItemViewBinder(viewType).getItemViewLayoutId();
     }
 
     public int getItemViewType(ItemViewBinder itemViewBinder) {
