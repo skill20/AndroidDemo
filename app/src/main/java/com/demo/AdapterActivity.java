@@ -12,9 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.demo.adapter.CommonAdapter;
 import com.demo.adapter.MultiItemTypeAdapter;
 import com.demo.adapter.base.ItemViewDelegate;
+import com.demo.adapter.base.MultiItemType;
 import com.demo.adapter.base.ViewHolder;
 import com.demo.adapter.wrapper.EmptyWrapper;
 import com.demo.adapter.wrapper.HeaderAndFooterWrapper;
@@ -66,13 +66,8 @@ public class AdapterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Context context = v.getContext();
                 LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-                CommonAdapter<String> adapter = new CommonAdapter<String>(context, getData(10), R.layout.holder_list_1) {
-                    @Override
-                    protected void convert(ViewHolder holder, String s, int position) {
-                        holder.setText(R.id.tv, s);
-                    }
-                };
-
+                MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(10));
+                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
                 recycleView.setLayoutManager(layoutManager);
                 recycleView.setAdapter(adapter);
             }
@@ -83,9 +78,24 @@ public class AdapterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Context context = v.getContext();
                 LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-                MultiItemTypeAdapter<String> adapter = new MultiItemTypeAdapter<String>(context, getData(10));
-                adapter.addItemViewDelegate(new ListHolder1());
-                adapter.addItemViewDelegate(new ListHolder2());
+                ArrayList<MultiItemType> objects = new ArrayList<>();
+//                objects.add("string - 111");
+//                objects.add("string - 111");
+//                objects.add("string - 111");
+//                objects.add("string - 111");
+//                objects.add(12);
+                Result2 e = new Result2();
+                e.s = "result2-----";
+                objects.add(e);
+                Result e1 = new Result();
+                e1.s = "result-----";
+                objects.add(e1);
+
+
+                MultiItemTypeAdapter<MultiItemType> adapter = new MultiItemTypeAdapter<>(context, objects);
+                adapter.addItemViewDelegate(Result.CLICK_ITEM_VIEW,new ListHolder1());
+                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
+
 
                 recycleView.setLayoutManager(layoutManager);
                 recycleView.setAdapter(adapter);
@@ -100,13 +110,8 @@ public class AdapterActivity extends AppCompatActivity {
 
                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
 
-                CommonAdapter<String> adapter = new CommonAdapter<String>(context, getData(100), R.layout.holder_list_1) {
-                    @Override
-                    protected void convert(ViewHolder holder, String s, int position) {
-                        holder.setText(R.id.tv, s);
-                    }
-                };
-
+                MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(100));
+                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
                 recycleView.setLayoutManager(staggeredGridLayoutManager);
 
                 View header = LayoutInflater.from(context).inflate(R.layout.holder_list_head, recycleView, false);
@@ -129,12 +134,8 @@ public class AdapterActivity extends AppCompatActivity {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
 
-                CommonAdapter<String> adapter = new CommonAdapter<String>(context, getData(20), R.layout.holder_list_1) {
-                    @Override
-                    protected void convert(ViewHolder holder, String s, int position) {
-                        holder.setText(R.id.tv, s);
-                    }
-                };
+                MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(20));
+                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
 
                 recycleView.setLayoutManager(gridLayoutManager);
 
@@ -155,13 +156,8 @@ public class AdapterActivity extends AppCompatActivity {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 3);
                 StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
 
-                final CommonAdapter<String> adapter = new CommonAdapter<String>(context, getData(10), R.layout.holder_list_1) {
-                    @Override
-                    protected void convert(ViewHolder holder, String s, int position) {
-                        holder.setText(R.id.tv, s);
-                    }
-                };
-
+                final MultiItemTypeAdapter<Result> adapter = new MultiItemTypeAdapter<>(context, getData(10));
+                adapter.addItemViewDelegate(Result.CLICK_ITEM_CHILD_VIEW,new ListHolder2());
                 recycleView.setLayoutManager(layoutManager);
 
                 final LoadMoreWrapper loadMoreWrapper = new LoadMoreWrapper(adapter) {
@@ -208,7 +204,7 @@ public class AdapterActivity extends AppCompatActivity {
                         recycleView.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                adapter.getDatas().addAll(getData(10));
+                                adapter.getData().addAll(getData(10));
 //                                loadMoreWrapper.setLoadingMoreEnabled(false);
 //                                loadMoreWrapper.loadMoreFail("fail");
                                 if (i == 2) {
@@ -231,17 +227,19 @@ public class AdapterActivity extends AppCompatActivity {
 
     int i = 1;
 
-    private List<String> getData(int size) {
+    private List<Result> getData(int size) {
 
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Result> list = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            list.add("String---" + i);
+            Result result = new Result();
+            result.s = "String---" + i;
+            list.add(result);
         }
 
         return list;
     }
 
-    private static class ListHolder1 implements ItemViewDelegate<String> {
+    private static class ListHolder1 implements ItemViewDelegate<Result2> {
 
         @Override
         public int getItemViewLayoutId() {
@@ -249,17 +247,12 @@ public class AdapterActivity extends AppCompatActivity {
         }
 
         @Override
-        public boolean isForViewType(String item, int position) {
-            return position % 2 == 0;
-        }
-
-        @Override
-        public void convert(ViewHolder holder, String s, int position) {
-            holder.setText(R.id.tv, s);
+        public void convert(ViewHolder holder, Result2 s, int position) {
+            holder.setText(R.id.tv, s.s);
         }
     }
 
-    private static class ListHolder2 implements ItemViewDelegate<String> {
+    private static class ListHolder2 implements ItemViewDelegate<Result> {
 
         @Override
         public int getItemViewLayoutId() {
@@ -267,13 +260,32 @@ public class AdapterActivity extends AppCompatActivity {
         }
 
         @Override
-        public boolean isForViewType(String item, int position) {
-            return position % 2 != 0;
+        public void convert(ViewHolder holder, Result s, int position) {
+            holder.setText(R.id.tv, s.s);
         }
+    }
+
+
+    public static class Result implements MultiItemType{
+
+        public static final int CLICK_ITEM_VIEW = 1;
+        public static final int CLICK_ITEM_CHILD_VIEW = 2;
+
+        protected int type = CLICK_ITEM_CHILD_VIEW;
+        protected String s;
 
         @Override
-        public void convert(ViewHolder holder, String s, int position) {
-            holder.setText(R.id.tv, s);
+        public int getViewType() {
+            return type;
+        }
+    }
+
+    public static class Result2 implements MultiItemType{
+        protected int type = Result.CLICK_ITEM_VIEW;
+        protected String s;
+        @Override
+        public int getViewType() {
+            return type;
         }
     }
 }

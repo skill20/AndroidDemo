@@ -10,9 +10,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.demo.adapter.CommonAdapter;
 import com.demo.adapter.MultiItemTypeAdapter;
 import com.demo.adapter.base.ItemViewDelegate;
+import com.demo.adapter.base.MultiItemType;
 import com.demo.adapter.base.ViewHolder;
 import com.demo.decoration.TitleItemDecoration;
 import com.demo.weidget.IndexView;
@@ -48,8 +48,8 @@ public class DecorationActivity extends AppCompatActivity {
 
         mCityList = getData();
         MultiItemTypeAdapter<CityBean> adapter = new MultiItemTypeAdapter<>(this, mCityList);
-        adapter.addItemViewDelegate(R.layout.holder_list_1, new ListHolder1());
-        adapter.addItemViewDelegate(R.layout.holder_list_2, new ListHolder2());
+        adapter.addItemViewDelegate(CityBean.CITY_CHAR, new ListHolder1());
+        adapter.addItemViewDelegate(CityBean.CITY_NAME, new ListHolder2());
 
         mRecycleView.addItemDecoration(new TitleItemDecoration().registerStickType(R.layout.holder_list_1, new TitleItemDecoration.StickTypeCreator() {
             @Override
@@ -152,7 +152,7 @@ public class DecorationActivity extends AppCompatActivity {
         return list;
     }
 
-    public static class CityBean {
+    public static class CityBean implements MultiItemType{
 
         public static final int CITY_NAME = 10;
         public static final int CITY_CHAR = 11;
@@ -162,6 +162,11 @@ public class DecorationActivity extends AppCompatActivity {
         public String firstChar;
 
         public int type = CITY_NAME;
+
+        @Override
+        public int getViewType() {
+            return type;
+        }
     }
 
     private static class ListHolder1 implements ItemViewDelegate<CityBean> {
@@ -171,10 +176,6 @@ public class DecorationActivity extends AppCompatActivity {
             return R.layout.holder_list_1;
         }
 
-        @Override
-        public boolean isForViewType(CityBean item, int position) {
-            return CityBean.CITY_CHAR == item.type;
-        }
 
         @Override
         public void convert(ViewHolder holder, CityBean s, int position) {
@@ -187,11 +188,6 @@ public class DecorationActivity extends AppCompatActivity {
         @Override
         public int getItemViewLayoutId() {
             return R.layout.holder_list_2;
-        }
-
-        @Override
-        public boolean isForViewType(CityBean item, int position) {
-            return CityBean.CITY_NAME == item.type;
         }
 
         @Override

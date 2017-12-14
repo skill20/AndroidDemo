@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.demo.adapter.base.ItemViewDelegate;
 import com.demo.adapter.base.ItemViewDelegateManager;
+import com.demo.adapter.base.MultiItemType;
 import com.demo.adapter.base.ViewHolder;
 
 import java.util.List;
@@ -17,19 +18,19 @@ import java.util.List;
  * Copyright(c) 2017 世联行
  * Description
  */
-public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
+public class MultiItemTypeAdapter<T extends MultiItemType> extends RecyclerView.Adapter<ViewHolder> {
 
     protected Context mContext;
     protected List<T> mDataList;
 
-    protected ItemViewDelegateManager mItemViewDelegateManager;
+    protected ItemViewDelegateManager<T> mItemViewDelegateManager;
     protected OnItemClickListener mOnItemClickListener;
 
 
-    public MultiItemTypeAdapter(Context context, List<T> datas) {
+    public MultiItemTypeAdapter(Context context, List<T> data) {
         mContext = context;
-        mDataList = datas;
-        mItemViewDelegateManager = new ItemViewDelegateManager();
+        mDataList = data;
+        mItemViewDelegateManager = new ItemViewDelegateManager<>();
     }
 
     @Override
@@ -37,13 +38,13 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         if (!useItemViewDelegateManager()) {
             return super.getItemViewType(position);
         }
+
         return mItemViewDelegateManager.getItemViewType(mDataList.get(position), position);
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemViewDelegate itemViewDelegate = mItemViewDelegateManager.getItemViewDelegate(viewType);
-        int layoutId = itemViewDelegate.getItemViewLayoutId();
+        int layoutId = mItemViewDelegateManager.getItemViewLayoutId(viewType);
         ViewHolder holder = ViewHolder.createViewHolder(mContext, parent, layoutId);
         onViewHolderCreated(holder, holder.getConvertView());
         setListener(parent, holder, viewType);
@@ -106,16 +107,11 @@ public class MultiItemTypeAdapter<T> extends RecyclerView.Adapter<ViewHolder> {
         return mItemViewDelegateManager.getItemViewDelegateCount() > 0;
     }
 
-    public List<T> getDatas() {
+    public List<T> getData() {
         return mDataList;
     }
 
-    public MultiItemTypeAdapter addItemViewDelegate(ItemViewDelegate<T> itemViewDelegate) {
-        mItemViewDelegateManager.addDelegate(itemViewDelegate);
-        return this;
-    }
-
-    public MultiItemTypeAdapter addItemViewDelegate(int viewType, ItemViewDelegate<T> itemViewDelegate) {
+    public MultiItemTypeAdapter addItemViewDelegate(int viewType, ItemViewDelegate itemViewDelegate) {
         mItemViewDelegateManager.addDelegate(viewType, itemViewDelegate);
         return this;
     }
