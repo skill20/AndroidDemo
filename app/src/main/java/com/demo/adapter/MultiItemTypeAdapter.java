@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.demo.adapter.base.ItemViewDelegate;
+import com.demo.adapter.base.ItemViewBinder;
 import com.demo.adapter.base.ItemViewDelegateManager;
 import com.demo.adapter.base.MultiItemType;
 import com.demo.adapter.base.ViewHolder;
@@ -111,8 +111,8 @@ public class MultiItemTypeAdapter<T extends MultiItemType> extends RecyclerView.
         return mDataList;
     }
 
-    public MultiItemTypeAdapter addItemViewDelegate(int viewType, ItemViewDelegate itemViewDelegate) {
-        mItemViewDelegateManager.addDelegate(viewType, itemViewDelegate);
+    public MultiItemTypeAdapter addItemViewDelegate(int viewType, ItemViewBinder itemViewBinder) {
+        mItemViewDelegateManager.addDelegate(viewType, itemViewBinder);
         return this;
     }
 

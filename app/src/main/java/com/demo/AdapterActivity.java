@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.demo.adapter.MultiItemTypeAdapter;
-import com.demo.adapter.base.ItemViewDelegate;
+import com.demo.adapter.base.ItemViewBinder;
 import com.demo.adapter.base.MultiItemType;
 import com.demo.adapter.base.ViewHolder;
 import com.demo.adapter.wrapper.EmptyWrapper;
@@ -239,7 +239,7 @@ public class AdapterActivity extends AppCompatActivity {
         return list;
     }
 
-    private static class ListHolder1 implements ItemViewDelegate<Result2> {
+    private static class ListHolder1 implements ItemViewBinder<Result2> {
 
         @Override
         public int getItemViewLayoutId() {
@@ -252,7 +252,7 @@ public class AdapterActivity extends AppCompatActivity {
         }
     }
 
-    private static class ListHolder2 implements ItemViewDelegate<Result> {
+    private static class ListHolder2 implements ItemViewBinder<Result> {
 
         @Override
         public int getItemViewLayoutId() {

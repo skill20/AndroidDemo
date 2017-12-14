@@ -6,7 +6,7 @@ package com.demo.adapter.base;
  * Copyright(c) 2017 世联行
  * Description
  */
-public interface ItemViewDelegate<T> {
+public interface ItemViewBinder<T> {
 
     int getItemViewLayoutId();
 

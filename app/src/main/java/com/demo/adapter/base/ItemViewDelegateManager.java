@@ -10,27 +10,27 @@ import android.support.v4.util.SparseArrayCompat;
  */
 public class ItemViewDelegateManager<T extends MultiItemType> {
 
-    private SparseArrayCompat<ItemViewDelegate<T>> delegates = new SparseArrayCompat<>();
+    private SparseArrayCompat<ItemViewBinder<T>> delegates = new SparseArrayCompat<>();
 
     public int getItemViewDelegateCount() {
         return delegates.size();
     }
 
-    public ItemViewDelegateManager<T> addDelegate(int viewType, ItemViewDelegate<T> delegate) {
+    public ItemViewDelegateManager<T> addDelegate(int viewType, ItemViewBinder<T> delegate) {
         if (delegates.get(viewType) != null) {
             throw new IllegalArgumentException(
-                    "An ItemViewDelegate is already registered for the viewType = "
+                    "An ItemViewBinder is already registered for the viewType = "
                             + viewType
-                            + ". Already registered ItemViewDelegate is "
+                            + ". Already registered ItemViewBinder is "
                             + delegates.get(viewType));
         }
         delegates.put(viewType, delegate);
         return this;
     }
 
-    public ItemViewDelegateManager<T> removeDelegate(ItemViewDelegate<T> delegate) {
+    public ItemViewDelegateManager<T> removeDelegate(ItemViewBinder<T> delegate) {
         if (delegate == null) {
-            throw new NullPointerException("ItemViewDelegate is null");
+            throw new NullPointerException("ItemViewBinder is null");
         }
         int indexToRemove = delegates.indexOfValue(delegate);
 
@@ -56,12 +56,12 @@ public class ItemViewDelegateManager<T extends MultiItemType> {
     public void convert(ViewHolder holder, T item, int position) {
 
         int viewType = item.getViewType();
-        ItemViewDelegate<T> itemViewDelegate = delegates.get(viewType);
-        itemViewDelegate.convert(holder, item, position);
+        ItemViewBinder<T> itemViewBinder = delegates.get(viewType);
+        itemViewBinder.convert(holder, item, position);
     }
 
 
-    public ItemViewDelegate getItemViewDelegate(int viewType) {
+    public ItemViewBinder getItemViewDelegate(int viewType) {
         return delegates.get(viewType);
     }
 
@@ -69,7 +69,7 @@ public class ItemViewDelegateManager<T extends MultiItemType> {
         return getItemViewDelegate(viewType).getItemViewLayoutId();
     }
 
-    public int getItemViewType(ItemViewDelegate itemViewDelegate) {
-        return delegates.indexOfValue(itemViewDelegate);
+    public int getItemViewType(ItemViewBinder itemViewBinder) {
+        return delegates.indexOfValue(itemViewBinder);
     }
 }

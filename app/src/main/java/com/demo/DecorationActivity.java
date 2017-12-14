@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.demo.adapter.MultiItemTypeAdapter;
-import com.demo.adapter.base.ItemViewDelegate;
+import com.demo.adapter.base.ItemViewBinder;
 import com.demo.adapter.base.MultiItemType;
 import com.demo.adapter.base.ViewHolder;
 import com.demo.decoration.TitleItemDecoration;
@@ -169,7 +169,7 @@ public class DecorationActivity extends AppCompatActivity {
         }
     }
 
-    private static class ListHolder1 implements ItemViewDelegate<CityBean> {
+    private static class ListHolder1 implements ItemViewBinder<CityBean> {
 
         @Override
         public int getItemViewLayoutId() {
@@ -183,7 +183,7 @@ public class DecorationActivity extends AppCompatActivity {
         }
     }
 
-    private static class ListHolder2 implements ItemViewDelegate<CityBean> {
+    private static class ListHolder2 implements ItemViewBinder<CityBean> {
 
         @Override
         public int getItemViewLayoutId() {
